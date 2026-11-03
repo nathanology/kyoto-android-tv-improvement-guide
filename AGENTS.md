@@ -6,8 +6,8 @@ The person is technical but may not know Android internals. Explain each change 
 
 ## Rules (non-negotiable)
 
-1. **Never run a command with `--apply` for `debloat`, `tune` or `home set` yourself.** After the change, kyoto asks whether the TV remote still works, and only the person holding the remote can answer. kyoto exits with code 3 if you try from a non-interactive shell. Show the dry run, then give the exact `--apply` command to the person to run in their own terminal window, and wait for them to report back.
-2. **Never uninstall anything** (`pm uninstall`, `adb uninstall`) and never run raw `pm disable*`, `settings put` or `appops` commands over adb. Every change goes through kyoto, which snapshots first and can roll back.
+1. **Never run a command with `--apply` for `debloat`, `tune` or `home set` yourself.** After the change, kyoto asks whether the TV remote still works, and only the person holding the remote can answer. kyoto exits with code 3 if you try from a non-interactive shell. If your shell runs in a pseudo-terminal, that check passes, so this rule is what protects the person: the prompt would sit unanswered and the batch would revert after 90 s. Show the dry run, then give the exact `--apply` command to the person to run in their own terminal window, and wait for them to report back.
+2. **Never uninstall anything** (`pm uninstall`, `adb uninstall`), except Kyoto Home itself (`com.kyoto.home`) when the person is reinstalling it. Never run raw `pm disable*`, `settings put` or `appops` commands over adb. Every change goes through kyoto, which snapshots first and can roll back.
 3. **Never edit `cli/guard.ts` or pass `--allow` to get past a refusal** unless the person explicitly asks for that specific package after you explain the risk. A guard refusal (exit code 2) is the tool working as designed.
 4. **Ask before disabling any app the household might use.** Only catalog entries with risk `safe` may be marked without asking. `optional` entries are apps: list them and ask which ones anyone in the household watches. `caution` entries switch off a system feature: explain the note and ask.
 5. **One batch at a time.** Do not start the next batch until the person confirms the previous one committed and the TV behaves normally.
@@ -20,7 +20,7 @@ The person is technical but may not know Android internals. Explain each change 
 |---|---|---|
 | 0 | OK | Continue |
 | 1 | Error, or a batch was reverted | Read the message. A reverted batch is safe; see Troubleshooting |
-| 2 | Guard refused a package | Remove that package from the batch (`kyoto mark <pkg> --keep`), then re-run the dry run |
+| 2 | Guard refused a package | Remove it: `kyoto mark <pkg> --keep` for `debloat`, or delete it from `restrictBackground` in `tune.json` for `tune`. Re-run the dry run |
 | 3 | Needs a human | Hand the printed command to the person |
 
 ## Playbook
@@ -69,7 +69,8 @@ Note `manufacturer`, `model`, `device`, `android`, `home`, `profile` and `interr
 bun kyoto profiles --json
 ```
 
-- If a profile has `matchesThisTv: true`, it is already active. Read its `profile.json` notes to the person.
+- If a profile has `matchesThisTv: true`, check its `active` field; if it isn't active, run `bun kyoto use <name>`. Read its `profile.json` notes to the person.
+- **A shipped profile's decisions were made for someone else's household.** In step 5, go through every `optional` and `caution` entry it already marks `disable` with the person, and `kyoto mark <pkg> --keep` anything they use. The same applies after `init --from`. Batch 1 of a shipped profile only ever contains `safe` entries (the tests enforce it), so that batch needs no review.
 - Otherwise create one. Use `<manufacturer>-<device>` in lowercase as the name (kyoto prints a suggestion):
 
 ```sh
@@ -179,13 +180,13 @@ If this TV had no profile before, offer to help the person contribute `profiles/
 ## Undo
 
 ```sh
-bun kyoto rollback --batch N            # dry run: what undoing batch N would restore
+bun kyoto rollback --batch N            # dry run: what undoing batch N would restore (also prints the batch label to use)
 bun kyoto rollback --batch N --apply --yes
 bun kyoto rollback --all --apply --yes  # back to how the TV was before kyoto's first change
 bun kyoto home restore --apply --yes    # stock launcher back
 ```
 
-Rollback only undoes kyoto's own changes, so you may run it with `--yes` once the person has asked to undo. Rolling back batch N also undoes any later batches.
+Rollback only undoes kyoto's own changes, so you may run it with `--yes` once the person has asked to undo. Rolling back a batch returns the TV to just before it, so every later batch (debloat, `tune`, `home`) is undone too, and `home restore` likewise undoes batches applied after `home set`. Apply the launcher last.
 
 ## Troubleshooting
 

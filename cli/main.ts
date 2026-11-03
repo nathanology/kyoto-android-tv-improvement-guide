@@ -7,7 +7,7 @@ import { createInterface } from "node:readline/promises";
 import { readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { Adb, AdbError, BootTimeout } from "./adb";
-import { type Action, type LogEntry, type Prompt, mergeScopes, readLog, rollback, runBatch } from "./batch";
+import { type Action, type LogEntry, type Prompt, batchStates, mergeScopes, readLog, rollback, rollbackTarget, runBatch } from "./batch";
 import { pollCrashes, readLog as readCrashLog, summarize } from "./crashes";
 import { GuardError, resolveHome, validateAllow } from "./guard";
 import { APPS_DIR, KYOTO_HOME, parseAppsList } from "./launcher";
@@ -262,11 +262,9 @@ async function cmdDoctor(rebootProbe: boolean, json: boolean) {
   const home = await resolveHome(adb);
   const disabled = parsePackageList(await adb.shell("pm list packages -d"));
 
-  const entries = await readLog(STATE);
-  const lastBySnap = new Map<string, LogEntry>();
-  for (const e of entries) if (e.snapshot) lastBySnap.set(e.snapshot, e);
-  const interrupted = [...lastBySnap.values()].filter((e) => e.event === "started").map((e) => e.label);
-  const committed = [...new Set(entries.filter((e) => e.event === "committed").map((e) => e.label))];
+  const states = [...batchStates(await readLog(STATE))];
+  const interrupted = states.filter(([, s]) => s === "started").map(([l]) => l);
+  const committed = states.filter(([, s]) => s === "committed").map(([l]) => l);
 
   if (json) {
     emit({ serial: device.serial, ...props, fingerprint: fp, home, profile: device.profile ?? null, disabled, committed, interrupted, adbSurvivesReboot: device.adbSurvivesReboot ?? null });
@@ -368,7 +366,16 @@ async function cmdSuggest(flags: Record<string, string | boolean>) {
   const p = await activeProfile(flags);
   const path = `${p.dir}/packages.json`;
   let { profile } = validatePackages(await readPackages(p));
-  const suggestions = suggest(profile, await loadCatalog());
+  const catalog = await loadCatalog();
+  if (flags.write) {
+    // Only flip entries nobody has decided on yet (a reason means someone chose deliberately).
+    const toMark = suggest(profile, catalog).filter((s) => s.entry.risk === "safe" && s.current.decision === "keep" && !s.current.reason);
+    for (const s of toMark) profile = markPackages(profile, [s.entry.pkg], { batch: s.batch }, s.entry.label);
+    await writeJson(path, profile);
+    log(`✓ Marked ${toMark.length} safe package(s) for batch 1 in profiles/${p.name}/packages.json`);
+    if (toMark.length) log("Next: kyoto debloat --batch 1   (dry run; shows the plan)\n");
+  }
+  const suggestions = suggest(profile, catalog);
   if (flags.json) {
     return emit(suggestions.map((s) => ({ ...s.entry, suggestedBatch: s.batch, decision: s.current.decision, batch: s.current.batch ?? null, reason: s.current.reason ?? null })));
   }
@@ -382,16 +389,7 @@ async function cmdSuggest(flags: Record<string, string | boolean>) {
       log(`  ${s.entry.pkg.padEnd(44)} [${now}]  ${s.entry.label}: ${s.entry.note}`);
     }
   }
-  if (!flags.write) {
-    log(`\nTo mark every SAFE entry: kyoto suggest --write\nTo mark others:          kyoto mark <pkg>... --batch N --reason "why"`);
-    return;
-  }
-  // Only flip entries nobody has decided on yet (a reason means someone chose deliberately).
-  const toMark = suggestions.filter((s) => s.entry.risk === "safe" && s.current.decision === "keep" && !s.current.reason);
-  for (const s of toMark) profile = markPackages(profile, [s.entry.pkg], { batch: s.batch }, s.entry.label);
-  await writeJson(path, profile);
-  log(`\n✓ Marked ${toMark.length} safe package(s) for batch 1 in profiles/${p.name}/packages.json`);
-  if (toMark.length) log("Next: kyoto debloat --batch 1   (dry run; shows the plan)");
+  if (!flags.write) log(`\nTo mark every SAFE entry: kyoto suggest --write\nTo mark others:          kyoto mark <pkg>... --batch N --reason "why"`);
 }
 
 async function cmdMark(pkgs: string[], flags: Record<string, string | boolean>) {
@@ -565,6 +563,8 @@ async function cmdHome(sub: string | undefined, component: string | undefined, f
   if (!/Status:\s*ok/.test(start)) throw new Error(`${component} didn't open; not changing HOME.\n${start.trim()}`);
   log(`✓ ${component} opens`);
   if (apply) {
+    // Outside the batch snapshot on purpose: a preference for a launcher is harmless once the stock one is
+    // re-enabled (system HOMEs outrank preferences), and without it the TV may show a chooser instead.
     await adb.shell(`cmd package set-home-activity ${component}`);
     log(`✓ set as preferred HOME`);
   }
@@ -588,7 +588,7 @@ async function cmdHomeApps(file: string | undefined) {
   const lines = parseAppsList(await Bun.file(file).text());
   const { adb } = await adbFor();
   if (!parsePackageList(await adb.shell(`pm list packages ${KYOTO_HOME}`)).includes(KYOTO_HOME)) {
-    throw new Error("Kyoto Home isn't installed. See docs/GUIDE.md, step 6.");
+    throw new Error("Kyoto Home isn't installed. See docs/GUIDE.md, section 8 (Launcher).");
   }
   const installed = new Set(parsePackageList(await adb.shell("pm list packages")));
   await adb.shell(`mkdir -p ${APPS_DIR}`);
@@ -624,10 +624,15 @@ async function cmdRollback(flags: Record<string, string | boolean>) {
     label = "all";
   } else if (typeof batch === "string" && batch) {
     const label0 = /^\d+$/.test(batch) ? `debloat-${batch}` : batch;
-    const started = entries.filter((e) => e.label === label0 && e.event === "started").pop();
-    if (!started?.snapshot) throw new Error(`No snapshot found for batch "${label0}".`);
-    snapshotPath = started.snapshot;
-    scope = started.scope ?? { settingsKeys: [], appPkgs: [] };
+    const t = rollbackTarget(entries, label0);
+    if (!t?.entry.snapshot) {
+      const ran = entries.some((e) => e.label === label0 && e.event === "started");
+      if (ran) return log(`✓ ${label0} hasn't run since the last rollback; nothing to undo.`);
+      throw new Error(`No snapshot found for batch "${label0}".`);
+    }
+    snapshotPath = t.entry.snapshot;
+    // Later batches' settings and app restrictions are undone too, not just their packages.
+    scope = mergeScopes(entries.slice(t.index).flatMap((e) => (e.scope ? [e.scope] : [])));
     label = label0;
     log(`Note: this returns the TV to how it was right before ${label0}, which also undoes any later batches.`);
   } else {

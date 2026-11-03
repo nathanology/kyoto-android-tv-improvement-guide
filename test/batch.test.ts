@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, test } from "bun:test";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { type Action, actionCommands, mergeScopes, readLog, rollback, runBatch } from "../cli/batch";
+import { type Action, type LogEntry, actionCommands, batchStates, mergeScopes, readLog, rollback, rollbackTarget, runBatch } from "../cli/batch";
 import { GuardError } from "../cli/guard";
 import { FakeTv } from "./fake-tv";
 
@@ -224,5 +224,27 @@ describe("rollback", () => {
     expect(t.appops.has("com.netflix.ninja")).toBe(false);
     const again = await rollback({ adb: t, snapshotPath: `${dir}/merged.json`, scope, apply: true, prompt: answer("y"), stateDir: dir, label: "rollback-all" });
     expect(again.status).toBe("nothing-to-do");
+  });
+});
+
+describe("batch log", () => {
+  const e = (label: string, event: LogEntry["event"], snapshot = `${label}.json`): LogEntry => ({ at: "t", label, event, snapshot });
+
+  test("states: committed, interrupted, and rollback covers later batches", () => {
+    const log = [e("debloat-1", "started"), e("debloat-1", "committed"), e("tune", "started"), e("tune", "committed"), e("debloat-2", "started")];
+    expect(Object.fromEntries(batchStates(log))).toEqual({ "debloat-1": "committed", tune: "committed", "debloat-2": "started" });
+    const rolled = batchStates([...log, e("rollback-tune", "rollback")]);
+    expect(Object.fromEntries(rolled)).toEqual({ "debloat-1": "committed", tune: "rolled-back", "debloat-2": "rolled-back" });
+    expect([...batchStates([...log, e("rollback-all", "rollback")]).values()].every((s) => s === "rolled-back")).toBe(true);
+  });
+
+  test("rollback target is the first start since the last rollback, not a re-run's newer snapshot", () => {
+    const log = [e("debloat-1", "started", "a.json"), e("debloat-1", "committed", "a.json"), e("debloat-1", "started", "b.json"), e("debloat-1", "committed", "b.json")];
+    expect(rollbackTarget(log, "debloat-1")).toEqual({ entry: log[0]!, index: 0 });
+    const after = [...log, e("rollback-debloat-1", "rollback", "a.json"), e("debloat-1", "started", "c.json")];
+    expect(rollbackTarget(after, "debloat-1")?.entry.snapshot).toBe("c.json");
+    // Nothing since the rollback: already undone, and an older or newer snapshot could re-apply changes.
+    expect(rollbackTarget(log.concat(e("rollback-all", "rollback")), "debloat-1")).toBeNull();
+    expect(rollbackTarget(log, "tune")).toBeNull();
   });
 });

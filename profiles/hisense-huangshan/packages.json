@@ -445,14 +445,14 @@
       "pkg": "com.google.android.tvrecommendations",
       "decision": "disable",
       "system": true,
-      "batch": 1,
+      "batch": 3,
       "reason": "Home-screen recommendation rows (user wants off); ~22 MB"
     },
     {
       "pkg": "com.google.android.videos",
       "decision": "disable",
       "system": true,
-      "batch": 1,
+      "batch": 3,
       "reason": "Google Play Movies, discontinued; LMK churn"
     },
     {
@@ -781,29 +781,29 @@
       "pkg": "com.xumo.xumo.tv",
       "decision": "disable",
       "system": false,
-      "batch": 1,
+      "batch": 2,
       "reason": "Xumo Play (unused); killed by LMK repeatedly in as-is logs"
     },
     {
       "pkg": "net.vidaatv.android.tv",
       "decision": "disable",
       "system": true,
-      "batch": 1,
+      "batch": 2,
       "reason": "VIDAA Channels companion (unused)"
     },
     {
       "pkg": "net.vidaatv.hisense.android.tv",
       "decision": "disable",
       "system": true,
-      "batch": 1,
+      "batch": 2,
       "reason": "VIDAA Channels (unused); ~88 MB in background"
     },
     {
       "pkg": "tv.pluto.android",
       "decision": "disable",
       "system": false,
-      "reason": "Watched rarely. Background restriction (tune) didn't stop it: the TV input framework restarts its live-TV service at boot (~91 MB measured 2026-11-01). Re-enable with `kyoto rollback --batch 3 --apply` or `pm enable tv.pluto.android`.",
-      "batch": 3
+      "batch": 2,
+      "reason": "Watched rarely. Background restriction (tune) didn't stop it: the TV input framework restarts its live-TV service at boot (~91 MB measured 2026-11-01). Re-enable with `adb shell pm enable tv.pluto.android`."
     },
     {
       "pkg": "tv.twitch.android.app",

@@ -52,7 +52,7 @@ bun kyoto debloat --batch 1 --apply   # do it, verify apps + remote, auto-revert
 ## Safety model
 
 - **Disable, never uninstall.** `pm disable-user` is reversible with `pm enable`. The worst case is a factory reset, which re-enables everything.
-- **Dry run by default.** Nothing changes without `--apply`.
+- **Dry run by default.** Nothing on the TV changes without `--apply`. The one side effect: a `home set` dry run opens the new launcher once to check that it works.
 - **Snapshot before every batch.** Disabled packages, all three settings namespaces, and background state for affected apps. `rollback` diffs the live TV against a snapshot and restores the difference. Restores are idempotent.
 - **A guard that can't be bypassed** (`cli/guard.ts`). *Lifeline* packages (network stack, adb shell, System UI, settings, package installer, the active home screen) are never touched; losing one could cut your computer off from the TV. *Protected* packages (Play Services, Play Store, WebView, DRM, remote, voice, Bluetooth, tuner/HDMI, launchers) need an exact `--allow <pkg>`.
 - **Verified batches.** After a batch, kyoto launches your main apps, checks they reach the foreground without crashing, then asks you to try the remote. Anything but `y` within 90 s reverts the batch and verifies the revert.

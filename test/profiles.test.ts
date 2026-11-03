@@ -32,6 +32,15 @@ describe("shipped profiles", () => {
       expect(warnings).toEqual([]);
       validateTune(json(`profiles/${name}/tune.json`));
     });
+    test(`${name} batches catalog packages by their risk`, () => {
+      // Agents treat batch 1 as "safe, no questions"; an optional app hiding in it would be disabled unasked.
+      const catalog = new Map(validateCatalog(json("catalog/packages.json")).map((e) => [e.pkg, e]));
+      const wrong = validatePackages(json(`profiles/${name}/packages.json`)).profile.packages.flatMap((e) => {
+        const c = catalog.get(e.pkg);
+        return e.decision === "disable" && c && e.batch !== RISK_BATCH[c.risk] ? [`${e.pkg}: batch ${e.batch}, catalog says ${c.risk} → ${RISK_BATCH[c.risk]}`] : [];
+      });
+      expect(wrong).toEqual([]);
+    });
   }
 });
 

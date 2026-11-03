@@ -244,13 +244,13 @@ Only compare runs of the same kind; kyoto refuses to compare `quick` with `fresh
 
 ```sh
 bun kyoto rollback --batch 2              # dry run: what undoing batch 2 would restore
-bun kyoto rollback --batch 2 --apply      # undoes batch 2 and anything after it
+bun kyoto rollback --batch 2 --apply      # undoes batch 2 and every batch applied after it, tune and home included
 bun kyoto rollback --batch tune --apply
 bun kyoto home restore --apply
 bun kyoto rollback --all --apply          # the TV as it was before kyoto's first change
 ```
 
-Rollback restores from snapshots in `state/snapshots/`. It only touches what kyoto changed and is safe to run twice. Keep `state/` if you might want to undo later. Without it you can still re-enable any package by hand with `adb shell pm enable <pkg>`.
+Rollback restores from snapshots in `state/snapshots/`. It only touches what kyoto changed and is safe to run twice. `home restore` is a rollback of the `home` batch, so it also undoes batches applied after `home set`; that's why the launcher comes last. Keep `state/` if you might want to undo later. Without it you can still re-enable any package by hand with `adb shell pm enable <pkg>`.
 
 If all else fails, a **factory reset** re-enables every disabled package and resets every setting. kyoto never removes anything that a reset can't restore.
 

@@ -18,10 +18,10 @@ Run as `bun kyoto <command>` from the repository root. `--profile <name>` overri
 | `mark <pkg>... (--batch N \| --keep) [--reason "…"]` | no | Sets decisions in `packages.json` |
 | `debloat --batch N [--apply] [--allow pkg]... [--reboot-check] [--confirm-timeout S]` | with `--apply` | Disables batch N's packages as one verified batch |
 | `tune [--apply] [--allow pkg]... [--confirm-timeout S]` | with `--apply` | Applies `tune.json` as one verified batch |
-| `home set <pkg/.Activity> [--apply] [--confirm-timeout S]` | with `--apply` | Makes another launcher HOME; disables the current one |
-| `home restore [--apply] [--yes]` | with `--apply` | Rolls back `home set` |
+| `home set <pkg/.Activity> [--apply] [--confirm-timeout S]` | with `--apply` (the dry run opens the new launcher once to check it works) | Makes another launcher HOME; disables the current one |
+| `home restore [--apply] [--yes]` | with `--apply` | `rollback --batch home`: also undoes batches applied after `home set` |
 | `home apps <file>` | pushes a file | Sets Kyoto Home's app list |
-| `rollback (--batch LABEL \| --all) [--apply] [--yes]` | with `--apply` | Restores a snapshot. LABEL is a number (`2` → `debloat-2`), `tune` or `home` |
+| `rollback (--batch LABEL \| --all) [--apply] [--yes]` | with `--apply` | Returns the TV to just before batch LABEL (a number such as `2` → `debloat-2`, or `tune`, `home`), undoing it and every later batch. Uses the batch's first run since the last rollback |
 | `measure [--quick \| --no-reboot] [--repeat N]` | reboots unless `--quick`/`--no-reboot` | Saves a measurement to `state/measurements/` |
 | `compare <a.json> <b.json>` | no | Compares two measurements of the same variant and protocol |
 | `crashes` | no | Polls and summarizes crashes, ANRs and low-memory kills |
@@ -40,11 +40,11 @@ Run as `bun kyoto <command>` from the repository root. `--profile <name>` overri
 ## The batch lifecycle
 
 ```
+guard ──lifeline──▶ refuse, exit 2 (no override; dry runs too)
+ │    ──protected w/o --allow──▶ refuse, exit 2
+ ▼
 plan ──(no --apply)──▶ print plan, exit 0
  │ --apply
- ▼
-guard ──lifeline──▶ refuse, exit 2 (no override)
- │    ──protected w/o --allow──▶ refuse, exit 2
  ▼
 snapshot                  ← taken BEFORE any change; a crash mid-batch is recoverable
  ▼

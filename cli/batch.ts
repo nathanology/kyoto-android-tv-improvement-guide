@@ -151,6 +151,47 @@ export async function readLog(stateDir: string): Promise<LogEntry[]> {
     });
 }
 
+export type BatchState = "started" | "committed" | "reverted" | "failed" | "rolled-back";
+
+/**
+ * Where each batch label stands, replaying the log in order. A rollback of label X ("rollback-X")
+ * returns the TV to before X, so X and every batch started after it count as rolled back;
+ * "rollback-all" rolls back everything.
+ */
+export function batchStates(entries: LogEntry[]): Map<string, BatchState> {
+  const state = new Map<string, BatchState>();
+  const order: string[] = []; // labels by most recent start
+  for (const e of entries) {
+    if (e.event === "rollback") {
+      const target = e.label.replace(/^rollback-/, "");
+      const from = target === "all" ? 0 : order.indexOf(target);
+      if (from >= 0) for (const l of order.slice(from)) state.set(l, "rolled-back");
+      continue;
+    }
+    if (e.event === "started") {
+      const i = order.indexOf(e.label);
+      if (i >= 0) order.splice(i, 1);
+      order.push(e.label);
+    }
+    state.set(e.label, e.event);
+  }
+  return state;
+}
+
+/**
+ * The entry to roll back to for `label`: its first start since the last rollback, or null if it hasn't
+ * run since then (already undone). Re-running a batch (e.g. after a firmware update) adds a newer
+ * snapshot that already contains the batch's changes, so the newest one would undo nothing.
+ */
+export function rollbackTarget(entries: LogEntry[], label: string): { entry: LogEntry; index: number } | null {
+  let lastRollback = -1;
+  entries.forEach((e, i) => {
+    if (e.event === "rollback") lastRollback = i;
+  });
+  const index = entries.findIndex((e, i) => i > lastRollback && e.label === label && e.event === "started");
+  return index < 0 ? null : { entry: entries[index]!, index };
+}
+
 export interface CheckResult {
   ok: boolean;
   failures: string[];
@@ -300,7 +341,11 @@ export async function rollback(o: {
   const target = await loadSnapshot(o.snapshotPath);
   const live = await takeSnapshot(o.adb, "live", o.scope.appPkgs);
   const changes = diffSnapshots(target, live, o.scope);
-  if (!changes.length) return { changes, status: "nothing-to-do", failures: [] };
+  if (!changes.length) {
+    // Still record it, so `doctor` stops reporting the batch as interrupted or committed.
+    if (o.apply) await appendLog(o.stateDir, { at: new Date().toISOString(), label: o.label, event: "rollback", snapshot: o.snapshotPath, scope: o.scope });
+    return { changes, status: "nothing-to-do", failures: [] };
+  }
   if (target.fingerprint !== live.fingerprint) log("⚠ The TV's firmware changed since this snapshot (OTA). Review the list carefully.");
   if (!o.apply) return { changes, status: "dry-run", failures: [] };
   const ans = await o.prompt(`Apply these ${changes.length} changes? [y/N] `, 120_000);

@@ -43,7 +43,7 @@ The CPU wasn't the bottleneck. It already ran at its 1.8 GHz maximum during app 
 
 Picture settings were changed by hand; see [picture-settings.md](picture-settings.md).
 
-The full decisions are in [`profiles/hisense-huangshan/packages.json`](../../../profiles/hisense-huangshan/packages.json). They reflect one household's viewing.
+The full decisions are in [`profiles/hisense-huangshan/packages.json`](../../../profiles/hisense-huangshan/packages.json). They reflect one household's viewing. The batches there have since been regrouped by catalog risk (batch 1 safe, 2 optional apps, 3 system features), so they differ from the table above.
 
 ## Results
 
