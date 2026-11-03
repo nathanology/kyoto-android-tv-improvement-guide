@@ -1,5 +1,6 @@
-# Picture settings before kyoto changed them (2026-11-01, source: smart TV apps / home)
-Read from Settings → Picture via uiautomator + screenshots.
+# Picture settings on the reference TV (2026-11-01, source: smart TV apps / home)
+
+The kyoto CLI doesn't change picture settings. These were read from and changed in Settings → Picture by driving the TV's menus over adb (uiautomator + screenshots), and are recorded here so they can be undone.
 
 | Setting | Original |
 |---|---|
@@ -13,7 +14,7 @@ Read from Settings → Picture via uiautomator + screenshots.
 | settings global/system: picture_aipq_smart_scene | 1 |
 | settings: picture_mode_auto_adaptation | true |
 
-## Changed by kyoto (2026-11-01, via the Picture menu over adb)
+## Changed (2026-11-01, via the Picture menu over adb)
 
 | Setting | Before | After |
 |---|---|---|

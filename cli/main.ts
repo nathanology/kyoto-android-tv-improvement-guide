@@ -5,6 +5,7 @@
 
 import { createInterface } from "node:readline/promises";
 import { readdirSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { Adb, AdbError, BootTimeout } from "./adb";
 import { type Action, type LogEntry, type Prompt, mergeScopes, readLog, rollback, runBatch } from "./batch";
 import { pollCrashes, readLog as readCrashLog, summarize } from "./crashes";
@@ -34,7 +35,7 @@ import {
 } from "./profile";
 import { type Snapshot, SnapshotCorrupt, describeChange, loadSnapshot, parsePackageList } from "./snapshot";
 
-const ROOT = new URL("..", import.meta.url).pathname;
+const ROOT = fileURLToPath(new URL("..", import.meta.url)); // ends with a separator
 const STATE = `${ROOT}state`;
 const PROFILES = `${ROOT}profiles`;
 const CATALOG = `${ROOT}catalog/packages.json`;
@@ -233,7 +234,10 @@ async function cmdConnect(target?: string) {
   const props = await readDeviceProps(adb);
   const next: DeviceConfig = { ...prev, serial };
   // A different TV than last time: forget per-TV facts.
-  if (prev.serial && prev.serial !== serial) delete next.adbSurvivesReboot;
+  if (prev.serial && prev.serial !== serial) {
+    delete next.adbSurvivesReboot;
+    delete next.profile;
+  }
   log(`✓ Connected to ${props.manufacturer} ${props.model} (Android ${props.android}, device "${props.device}") at ${serial}`);
   if (!next.profile) {
     const match = bestMatch(await allProfiles(), props);

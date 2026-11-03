@@ -10,12 +10,25 @@ android {
         versionCode 2
         versionName "0.2.0"
     }
+    signingConfigs {
+        // CI signs releases with a stable key from repository secrets so updates install over each other.
+        // Local builds fall back to the debug key.
+        release {
+            def ks = System.getenv("KYOTO_KEYSTORE")
+            if (ks) {
+                storeFile file(ks)
+                storePassword System.getenv("KYOTO_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("KYOTO_KEY_ALIAS")
+                keyPassword System.getenv("KYOTO_KEY_PASSWORD")
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt")
-            signingConfig signingConfigs.debug   // sideloaded over adb; no store signing needed
+            signingConfig System.getenv("KYOTO_KEYSTORE") ? signingConfigs.release : signingConfigs.debug
         }
     }
     lint {
