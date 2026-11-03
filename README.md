@@ -28,7 +28,7 @@ Cold starts barely change because they are bound by the chip. The gain is that a
 
 This repo is written so an AI coding agent (Claude Code, Codex, Cursor, …) can drive it end to end. Open a terminal in an empty folder and tell your agent:
 
-> Read https://github.com/nathanology/tvos-diy-improvement-guide and follow its AGENTS.md to speed up my Android TV. The TV's IP address is 192.168.1.50.
+> Read https://github.com/nathanology/kyoto-android-tv-improvement-guide and follow its AGENTS.md to speed up my Android TV. The TV's IP address is 192.168.1.50.
 
 The agent clones the repo, checks your tools, connects to the TV, and walks you through each decision. You stay in the loop at the points that need a person: accepting the debugging prompt on the TV, choosing which apps your household uses, and running each `--apply` step in your own terminal with the remote in hand. kyoto enforces that last one: it refuses to change the TV from a shell where nobody can answer "does the remote still work?" (exit code 3).
 
@@ -37,7 +37,7 @@ The agent clones the repo, checks your tools, connects to the TV, and walks you 
 You need a computer on the same network as the TV, [Bun](https://bun.sh) ≥ 1.1, and adb ([platform-tools](https://developer.android.com/tools/releases/platform-tools)).
 
 ```sh
-git clone https://github.com/nathanology/tvos-diy-improvement-guide kyoto && cd kyoto
+git clone https://github.com/nathanology/kyoto-android-tv-improvement-guide kyoto && cd kyoto
 bun install
 bun kyoto connect 192.168.1.50:5555   # accept "Allow USB debugging?" on the TV
 bun kyoto init my-tv                  # or `bun kyoto profiles` if your TV already has one

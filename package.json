@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Make a slow Android TV fast again over adb: measure, debloat in reversible batches, tune, swap the launcher.",
   "license": "MIT",
-  "repository": "github:nathanology/tvos-diy-improvement-guide",
+  "repository": "github:nathanology/kyoto-android-tv-improvement-guide",
   "private": true,
   "type": "module",
   "bin": { "kyoto": "cli/main.ts" },

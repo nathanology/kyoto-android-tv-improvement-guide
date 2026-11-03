@@ -38,7 +38,7 @@ kyoto's job is to do that safely: measure, change a little, verify, and undo aut
 | git | gets the code | usually preinstalled |
 
 ```sh
-git clone https://github.com/nathanology/tvos-diy-improvement-guide kyoto
+git clone https://github.com/nathanology/kyoto-android-tv-improvement-guide kyoto
 cd kyoto
 bun install
 bun test        # optional: 120+ unit tests, no TV needed
@@ -193,7 +193,7 @@ The stock launcher is often the biggest memory user on the TV (136–266 MB on t
 
 ### Install
 
-Download `kyoto-home.apk` from the [latest release](https://github.com/nathanology/tvos-diy-improvement-guide/releases/latest), or build it yourself (JDK 17 and the Android SDK, `ANDROID_HOME` set):
+Download `kyoto-home.apk` from the [latest release](https://github.com/nathanology/kyoto-android-tv-improvement-guide/releases/latest), or build it yourself (JDK 17 and the Android SDK, `ANDROID_HOME` set):
 
 ```sh
 cd launcher && ./gradlew assembleRelease && cd ..

@@ -30,7 +30,7 @@ Run all commands from the repository root. `bun kyoto <command>` runs the CLI. C
 ### 0. Get the code and tools
 
 ```sh
-git clone https://github.com/nathanology/tvos-diy-improvement-guide kyoto && cd kyoto
+git clone https://github.com/nathanology/kyoto-android-tv-improvement-guide kyoto && cd kyoto
 bun --version     # need ≥ 1.1. Install: curl -fsSL https://bun.sh/install | bash   (Windows: see https://bun.sh)
 adb version       # Install: macOS `brew install --cask android-platform-tools`
                   #          Debian/Ubuntu `sudo apt install adb`   Windows `winget install Google.PlatformTools`
