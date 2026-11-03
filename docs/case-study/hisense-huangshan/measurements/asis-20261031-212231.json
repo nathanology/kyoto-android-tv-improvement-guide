@@ -1,0 +1,16 @@
+{
+  "variant": "as-is",
+  "protocol": 1,
+  "captured_at": "2026-10-31T21:22:31-04:00",
+  "uptime_s": 517821,
+  "fingerprint": "Hisense/huangshan/huangshan:10/QTG3.200902.001/00.00.00.101:user/release-keys",
+  "device": {"model": "SmartTV 4K FFM", "codename": "huangshan", "soc": "mt5895", "cpu": "4x Cortex-A73 (0xd09)", "abi": "armeabi-v7a (32-bit)", "android": "10 (API 29)", "home": "com.google.android.tvlauncher"},
+  "memory_kb": {"total": 1985712, "available": 648156, "swap_total": 819196, "swap_used": 195584},
+  "top_pss_kb": {"com.google.android.tvlauncher": 265757, "system": 127452, "com.google.android.gms": 108372, "com.android.tv.settings": 66429, "com.google.android.katniss (search+interactor)": 102509, "tv.pluto.android (+input)": 92440, "com.google.android.tungsten.setupwraith": 43170},
+  "cold_start_ms_median": {"com.netflix.ninja": 355, "com.google.android.youtube.tv": 667},
+  "cold_start_ms_runs": {"com.netflix.ninja": [348, 355, 368, 386, 324], "com.google.android.youtube.tv": [1041, 667, 650, 1157, 660]},
+  "packages": {"system": 126, "user": 23, "disabled": 0},
+  "dropbox_crashes_3d": {"data_app_crash": 0, "data_app_anr": 0, "data_app_native_crash": 0},
+  "lmk_kills_observed": "a YouTube launch triggered 8 low-memory kills in 0.35s, including Netflix running in the background; 74 more kill reports were suppressed",
+  "notes": "The 'crashes' are low-memory kills, not app crashes: a backgrounded app gets killed and restarts from scratch when reopened."
+}

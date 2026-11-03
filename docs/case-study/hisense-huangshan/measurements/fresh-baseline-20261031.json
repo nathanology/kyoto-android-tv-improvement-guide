@@ -1,0 +1,41 @@
+{
+  "variant": "fresh",
+  "protocol": 1,
+  "capturedAt": "2026-11-01T01:41:00.000Z",
+  "fingerprint": "Hisense/huangshan/huangshan:10/QTG3.200902.001/00.00.00.101:user/release-keys",
+  "uptimeS": 300,
+  "memAvailableKb": [
+    700500,
+    622948,
+    617236
+  ],
+  "memAvailableMedianKb": 622948,
+  "coldStartMs": {
+    "com.netflix.ninja": {
+      "runs": [
+        405,
+        406,
+        780,
+        434,
+        368
+      ],
+      "median": 406,
+      "min": 368,
+      "max": 780
+    },
+    "com.google.android.youtube.tv": {
+      "runs": [
+        566,
+        529,
+        524,
+        520
+      ],
+      "median": 526.5,
+      "min": 520,
+      "max": 566
+    }
+  },
+  "lmkKills": 5,
+  "drm": "unknown",
+  "note": "Baseline captured by hand before kyoto existed (same protocol steps); converted for kyoto compare."
+}

@@ -1,0 +1,21 @@
+{
+  "name": "kyoto",
+  "version": "0.2.0",
+  "description": "Make a slow Android TV fast again over adb: measure, debloat in reversible batches, tune, swap the launcher.",
+  "license": "MIT",
+  "repository": "github:nathanology/tvos-diy-improvement-guide",
+  "private": true,
+  "type": "module",
+  "bin": { "kyoto": "cli/main.ts" },
+  "engines": { "bun": ">=1.1" },
+  "scripts": {
+    "kyoto": "bun cli/main.ts",
+    "test": "bun test",
+    "test:live": "KYOTO_LIVE=1 bun test test/live --timeout 600000",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.6.0"
+  }
+}

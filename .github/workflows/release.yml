@@ -1,0 +1,46 @@
+name: Release
+
+# Push a tag like v0.2.0 to publish kyoto-home.apk on a GitHub release.
+# Optional repository secrets for a stable signing key (so updates install over each other):
+#   KYOTO_KEYSTORE_BASE64, KYOTO_KEYSTORE_PASSWORD, KYOTO_KEY_ALIAS, KYOTO_KEY_PASSWORD
+# Without them the APK is signed with the runner's debug key.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile && bun run typecheck && bun test
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/wrapper-validation@v4
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Signing key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KYOTO_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/kyoto.jks"
+            echo "KYOTO_KEYSTORE=$RUNNER_TEMP/kyoto.jks" >> "$GITHUB_ENV"
+          fi
+      - name: Build
+        working-directory: launcher
+        env:
+          KYOTO_KEYSTORE_PASSWORD: ${{ secrets.KYOTO_KEYSTORE_PASSWORD }}
+          KYOTO_KEY_ALIAS: ${{ secrets.KYOTO_KEY_ALIAS }}
+          KYOTO_KEY_PASSWORD: ${{ secrets.KYOTO_KEY_PASSWORD }}
+        run: ./gradlew assembleRelease && cp app/build/outputs/apk/release/app-release.apk ../kyoto-home.apk
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" kyoto-home.apk --generate-notes --title "kyoto $GITHUB_REF_NAME"

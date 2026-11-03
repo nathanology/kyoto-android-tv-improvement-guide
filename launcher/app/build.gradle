@@ -1,0 +1,43 @@
+plugins { id "com.android.application" }
+
+android {
+    namespace "com.kyoto.home"
+    compileSdk 34
+    defaultConfig {
+        applicationId "com.kyoto.home"
+        minSdk 26          // Android TV 8.0+; Typeface resources need API 26
+        targetSdk 29       // sideloaded only; 29 keeps package visibility simple on newer TVs
+        versionCode 2
+        versionName "0.2.0"
+    }
+    signingConfigs {
+        // CI signs releases with a stable key from repository secrets so updates install over each other.
+        // Local builds fall back to the debug key.
+        release {
+            def ks = System.getenv("KYOTO_KEYSTORE")
+            if (ks) {
+                storeFile file(ks)
+                storePassword System.getenv("KYOTO_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("KYOTO_KEY_ALIAS")
+                keyPassword System.getenv("KYOTO_KEY_PASSWORD")
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt")
+            signingConfig System.getenv("KYOTO_KEYSTORE") ? signingConfigs.release : signingConfigs.debug
+        }
+    }
+    lint {
+        // Sideloaded over adb, never published to Play.
+        disable "ExpiredTargetSdkVersion"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+// No dependencies on purpose: framework Views only, to keep idle memory low.

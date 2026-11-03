@@ -1,0 +1,28 @@
+{
+  "settings": [
+    {
+      "ns": "global",
+      "key": "window_animation_scale",
+      "value": "0.5",
+      "reason": "Halve menu animations; snappier navigation"
+    },
+    {
+      "ns": "global",
+      "key": "transition_animation_scale",
+      "value": "0.5",
+      "reason": "Halve screen transitions"
+    },
+    {
+      "ns": "global",
+      "key": "animator_duration_scale",
+      "value": "0.5",
+      "reason": "Halve UI animator durations (skipped automatically if this TV lacks the key)"
+    }
+  ],
+  "restrictBackground": [
+    {
+      "pkg": "tv.pluto.android",
+      "reason": "Watched rarely; its live-TV input service sits at ~92 MB in the background"
+    }
+  ]
+}

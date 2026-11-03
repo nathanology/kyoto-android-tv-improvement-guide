@@ -1,0 +1,14 @@
+node_modules/
+.context/
+.DS_Store
+
+# Android build output
+launcher/.gradle/
+launcher/build/
+launcher/app/build/
+launcher/local.properties
+
+# Everything kyoto writes about your TV: the pinned serial, snapshots (they contain android_id,
+# serial and MAC addresses), the change log, crash log and measurements. It stays on your machine.
+# Share measurements by copying the JSON into docs/case-study/<profile>/ after reading it.
+state/

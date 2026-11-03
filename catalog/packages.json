@@ -1,0 +1,272 @@
+[
+  {
+    "pkg": "com.demo",
+    "label": "Retail demo content",
+    "risk": "safe",
+    "note": "Store demo videos and loops. Never used at home.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.google.android.play.games",
+    "label": "Google Play Games",
+    "risk": "safe",
+    "note": "Games hub. Games themselves keep working without it.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.hisense.hotelmode",
+    "label": "Hisense hotel mode",
+    "risk": "safe",
+    "note": "Hotel/hospitality mode.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.hisense.storemode",
+    "label": "Hisense store mode",
+    "risk": "safe",
+    "note": "Retail store demo mode.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.hisense.tv.b2b",
+    "label": "Hisense commercial display mode",
+    "risk": "safe",
+    "note": "Business/commercial display mode.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "air.com.vudu.air.DownloaderTablet",
+    "label": "Vudu / Fandango at Home",
+    "risk": "optional",
+    "note": "Streaming store app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.aspiro.tidal",
+    "label": "Tidal",
+    "risk": "optional",
+    "note": "Music app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.bamnetworks.mobile.android.gameday.atbat",
+    "label": "MLB",
+    "risk": "optional",
+    "note": "Sports app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.clearchannel.iheartradio.tv",
+    "label": "iHeartRadio",
+    "risk": "optional",
+    "note": "Radio app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.espn.score_center",
+    "label": "ESPN",
+    "risk": "optional",
+    "note": "Sports app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.foxsports.android",
+    "label": "Fox Sports",
+    "risk": "optional",
+    "note": "Sports app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.google.android.youtube.tvmusic",
+    "label": "YouTube Music",
+    "risk": "optional",
+    "note": "Music app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.google.android.youtube.tvunplugged",
+    "label": "YouTube TV",
+    "risk": "optional",
+    "note": "Live TV subscription app. Not regular YouTube (com.google.android.youtube.tv).",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.ncaa.mmlive.app",
+    "label": "NCAA March Madness Live",
+    "risk": "optional",
+    "note": "Sports app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.pandora.android.atv",
+    "label": "Pandora",
+    "risk": "optional",
+    "note": "Music app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.roku.web.trc",
+    "label": "The Roku Channel",
+    "risk": "optional",
+    "note": "Streaming app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.sling",
+    "label": "Sling TV",
+    "risk": "optional",
+    "note": "Live TV subscription app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.spotify.tv.android",
+    "label": "Spotify",
+    "risk": "optional",
+    "note": "Music app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.ted.android.tv",
+    "label": "TED",
+    "risk": "optional",
+    "note": "Talks app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.tubitv",
+    "label": "Tubi",
+    "risk": "optional",
+    "note": "Free ad-supported streaming app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.vmn.android.comedycentral",
+    "label": "Comedy Central",
+    "risk": "optional",
+    "note": "Streaming app.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.xumo.xumo.tv",
+    "label": "Xumo Play",
+    "risk": "optional",
+    "note": "Free ad-supported channels. Seen being killed and restarted by the low-memory killer repeatedly.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "net.vidaatv.android.tv",
+    "label": "VIDAA Channels companion",
+    "risk": "optional",
+    "note": "Companion to VIDAA Channels; disable together.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "net.vidaatv.hisense.android.tv",
+    "label": "VIDAA Channels",
+    "risk": "optional",
+    "note": "Free ad-supported channels. ~88 MB resident in the background.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "tv.pluto.android",
+    "label": "Pluto TV",
+    "risk": "optional",
+    "note": "Free ad-supported live TV. Background restriction does not stop it: the TV input framework restarts its live-TV service at boot (~91 MB). Disabling is the only fix.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "tv.twitch.android.app",
+    "label": "Twitch",
+    "risk": "optional",
+    "note": "Streaming app. ~23 MB resident in the background.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.google.android.apps.mediashell",
+    "label": "Chromecast built-in",
+    "risk": "caution",
+    "note": "Lets phones cast to the TV. Disable only if nobody in the house casts.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.google.android.backdrop",
+    "label": "Ambient Mode",
+    "risk": "caution",
+    "note": "The photo/art screensaver. The TV falls back to the basic screensaver.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.google.android.tvrecommendations",
+    "label": "Android TV recommendations",
+    "risk": "caution",
+    "note": "Fills the recommendation rows on the stock Android TV home screen (~22 MB). No effect with Kyoto Home; with the stock launcher you lose those rows.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  },
+  {
+    "pkg": "com.google.android.videos",
+    "label": "Google Play Movies & TV",
+    "risk": "caution",
+    "note": "Discontinued on Android TV and restarted often by the system. On Google TV devices it can back the Shop/library, so check purchased films still play.",
+    "seenOn": [
+      "hisense-huangshan"
+    ]
+  }
+]

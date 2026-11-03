@@ -1,0 +1,14 @@
+{
+  "variant": "fresh",
+  "protocol": 1,
+  "captured_at": "2026-10-31T21:41:00-04:00",
+  "uptime_s_at_start": 300,
+  "fingerprint": "Hisense/huangshan/huangshan:10/QTG3.200902.001/00.00.00.101:user/release-keys",
+  "memavailable_kb": [700500, 622948, 617236],
+  "memavailable_kb_median": 622948,
+  "top_pss_kb": {"com.google.android.tvlauncher": 179251, "com.google.android.gms": 146759, "com.netflix.ninja": 93164, "net.vidaatv.hisense.android.tv": 87547, "system": 83231, "com.android.vending": 61329, "com.google.android.katniss:interactor": 60076, "tv.pluto.android": 45605},
+  "cold_start_ms_runs": {"com.netflix.ninja": [405, 406, 780, 434, 368], "com.google.android.youtube.tv": [566, 529, 524, 520]},
+  "cold_start_ms_median": {"com.netflix.ninja": 406, "com.google.android.youtube.tv": 526.5},
+  "lmk_kills_during_run": 5,
+  "notes": "The first Netflix pass after boot returned no TotalTime (first-run work), so it was re-run. One YouTube run missing. A fresh boot doesn't free memory: the median is 623MB vs 633MB as-is."
+}

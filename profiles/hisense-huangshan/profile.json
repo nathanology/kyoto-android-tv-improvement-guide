@@ -1,0 +1,23 @@
+{
+  "name": "hisense-huangshan",
+  "description": "2023 Hisense Android TV: Android 10, MediaTek MT5895, 2 GB RAM, stock Android TV launcher. The reference device kyoto was built on.",
+  "match": {
+    "manufacturer": "Hisense",
+    "device": "huangshan"
+  },
+  "checkApps": [
+    "com.netflix.ninja",
+    "com.google.android.youtube.tv",
+    "com.disney.disneyplus"
+  ],
+  "measureApps": [
+    "com.netflix.ninja",
+    "com.google.android.youtube.tv"
+  ],
+  "notes": [
+    "Keep/disable decisions for streaming apps reflect one household. Review every 'optional' entry against the apps you actually watch.",
+    "USB debugging also exposes adb over Wi-Fi on port 5555, and it survives reboots.",
+    "The stock launcher (com.google.android.tvlauncher) is a priority-2 system HOME; `kyoto home set` disables it reversibly.",
+    "Picture settings changed by hand are recorded in docs/case-study/hisense-huangshan/picture-settings.md."
+  ]
+}

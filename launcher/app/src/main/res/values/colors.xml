@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Only used before the activity applies its Palette (see Palette.java), so it matches the default dark casing. -->
+<resources>
+    <color name="casing">#1B1B1A</color>
+</resources>

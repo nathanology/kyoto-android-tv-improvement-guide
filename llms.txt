@@ -1,0 +1,25 @@
+# kyoto
+
+> Make a slow Android TV or Google TV fast again over adb, without root: measure memory pressure, disable unused packages in small verified and reversible batches, tune settings, and optionally replace the stock launcher with a lightweight one (Kyoto Home). Bun + TypeScript CLI; Android launcher in Java.
+
+AI agents helping someone with their TV: follow AGENTS.md step by step. Never run `--apply` yourself; the CLI exits with code 3 and prints the command to hand to the person holding the remote.
+
+## Docs
+
+- [AGENTS.md](AGENTS.md): playbook for AI coding agents (rules, steps, exit codes, troubleshooting)
+- [docs/GUIDE.md](docs/GUIDE.md): full human walkthrough
+- [docs/REFERENCE.md](docs/REFERENCE.md): commands, file formats, guard rules, measurement protocol
+- [docs/case-study/hisense-huangshan/README.md](docs/case-study/hisense-huangshan/README.md): the reference TV, with data
+
+## Data
+
+- [catalog/packages.json](catalog/packages.json): known packages, what they are, risk of disabling
+- [profiles/](profiles/): per-TV-model decisions (profile.json, packages.json, tune.json)
+
+## Code
+
+- [cli/main.ts](cli/main.ts): command dispatch
+- [cli/batch.ts](cli/batch.ts): guard → snapshot → apply → verify → confirm → commit/revert
+- [cli/guard.ts](cli/guard.ts): lifeline and protected package rules
+- [cli/profile.ts](cli/profile.ts): profiles, catalog, suggest, mark
+- [launcher/](launcher/): Kyoto Home

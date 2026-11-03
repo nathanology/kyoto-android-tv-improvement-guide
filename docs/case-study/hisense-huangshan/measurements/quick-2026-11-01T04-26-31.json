@@ -1,0 +1,41 @@
+{
+  "variant": "quick",
+  "protocol": 2,
+  "capturedAt": "2026-11-01T04:26:31.228Z",
+  "fingerprint": "Hisense/huangshan/huangshan:10/QTG3.200902.001/00.00.00.101:user/release-keys",
+  "uptimeS": 166,
+  "memAvailableKb": [
+    684240,
+    684160,
+    685688
+  ],
+  "memAvailableMedianKb": 684240,
+  "coldStartMs": {
+    "com.netflix.ninja": {
+      "runs": [
+        465,
+        376,
+        393
+      ],
+      "median": 393,
+      "min": 376,
+      "max": 465
+    },
+    "com.google.android.youtube.tv": {
+      "runs": [
+        673,
+        600,
+        556
+      ],
+      "median": 600,
+      "min": 556,
+      "max": 673
+    }
+  },
+  "lmkKills": 1,
+  "drm": "unknown",
+  "passes": 1,
+  "lmkKillsPerPass": [
+    1
+  ]
+}

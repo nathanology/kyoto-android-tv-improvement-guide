@@ -1,0 +1,33 @@
+name: Device report
+description: Tell us how kyoto went on your TV, good or bad
+labels: [device-report]
+body:
+  - type: input
+    id: tv
+    attributes:
+      label: TV
+      description: Manufacturer, model, year
+      placeholder: TCL 55S446, 2022
+    validations: { required: true }
+  - type: textarea
+    id: doctor
+    attributes:
+      label: "`bun kyoto doctor` output"
+      description: Remove the serial line before pasting.
+      render: text
+    validations: { required: true }
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Outcome
+      options:
+        - Worked; noticeably faster
+        - Worked; no noticeable difference
+        - A batch reverted
+        - Something broke
+    validations: { required: true }
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Which batches you applied, what reverted or broke, measurements before/after if you have them.

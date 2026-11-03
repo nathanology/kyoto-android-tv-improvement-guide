@@ -1,0 +1,19 @@
+10-31 21:45:10.756  2951  2951 E lowmemorykiller: Kill 'com.google.android.permissioncontroller' (9156), uid 10018, oom_adj 955 to free 71080kB
+10-31 21:45:10.756  2951  2951 I lowmemorykiller: Reclaimed 71080kB at oom_adj 800
+10-31 21:45:10.769  2951  2951 E lowmemorykiller: Kill 'com.android.vending:background' (7702), uid 10059, oom_adj 945 to free 110768kB
+10-31 21:45:10.769  2951  2951 I lowmemorykiller: Reclaimed 110768kB at oom_adj 800
+10-31 21:45:10.778  2951  2951 E lowmemorykiller: Kill 'com.android.vending' (6948), uid 10059, oom_adj 935 to free 138356kB
+10-31 21:45:10.778  2951  2951 I lowmemorykiller: Reclaimed 138356kB at oom_adj 800
+10-31 21:45:25.680  2951  2951 E lowmemorykiller: Kill 'com.hisense.tv.smartservice' (12523), uid 1000, oom_adj 955 to free 106052kB
+10-31 21:45:25.680  2951  2951 I lowmemorykiller: Reclaimed 106052kB at oom_adj 800
+10-31 21:45:25.692  2951  2951 E lowmemorykiller: Kill 'com.google.process.gservices' (4457), uid 10049, oom_adj 945 to free 76924kB
+10-31 21:45:25.692  2951  2951 I lowmemorykiller: Reclaimed 76924kB at oom_adj 800
+10-31 21:45:25.704  2951  2951 E lowmemorykiller: Kill 'com.google.android.gms.unstable' (12718), uid 10049, oom_adj 935 to free 139852kB
+10-31 21:45:25.704  2951  2951 I lowmemorykiller: Reclaimed 139852kB at oom_adj 800
+10-31 21:45:25.711  2951  2951 E lowmemorykiller: Kill 'tv.twitch.android.app' (5474), uid 10080, oom_adj 925 to free 97800kB
+10-31 21:45:25.711  2951  2951 I lowmemorykiller: Reclaimed 97800kB at oom_adj 800
+10-31 21:45:25.724  2951  2951 E lowmemorykiller: Kill 'com.wbd.stream' (13946), uid 10115, oom_adj 915 to free 111212kB
+10-31 21:45:25.724  2951  2951 I lowmemorykiller: Reclaimed 111212kB at oom_adj 800
+10-31 21:45:25.730  2951  2951 I lowmemorykiller: Reclaimed -4kB at oom_adj 800
+10-31 21:45:26.159  2951  2951 E lowmemorykiller: Kill 'com.google.android.youtube.tv' (13407), uid 10070, oom_adj 900 to free 277728kB
+10-31 21:45:26.159  2951  2951 I lowmemorykiller: Reclaimed 277728kB at oom_adj 800

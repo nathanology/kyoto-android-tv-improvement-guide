@@ -1,0 +1,2 @@
+ ResumedActivity:ActivityRecord{f65db82 u0 com.google.android.tvlauncher/.BootHelperEmptyActivity t12449}
+  ResumedActivity: ActivityRecord{f65db82 u0 com.google.android.tvlauncher/.BootHelperEmptyActivity t12449}
