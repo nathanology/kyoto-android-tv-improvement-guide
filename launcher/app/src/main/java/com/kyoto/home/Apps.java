@@ -6,7 +6,12 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -21,11 +26,16 @@ final class Apps {
 
     private Apps() {}
 
-    /** Home list from res/values/strings.xml: "pkg[,fallback]|Label", skipping anything not installed. */
+    /**
+     * Home list, "pkg[,fallback]|Label" per line, skipping anything not installed. Read from apps.txt in the
+     * app's external files dir if present (pushed by `kyoto home apps`), else res/values/strings.xml.
+     */
     static List<Entry> home(Context c) {
         PackageManager pm = c.getPackageManager();
         List<Entry> out = new ArrayList<>();
-        for (String line : c.getResources().getStringArray(R.array.home_apps)) {
+        List<String> lines = configLines(c);
+        if (lines == null) lines = Arrays.asList(c.getResources().getStringArray(R.array.home_apps));
+        for (String line : lines) {
             int bar = line.indexOf('|');
             if (bar < 0) continue;
             String label = line.substring(bar + 1);
@@ -37,6 +47,24 @@ final class Apps {
             }
         }
         return out;
+    }
+
+    /** Lines of apps.txt (blank lines and # comments dropped), or null when there is no usable file. */
+    private static List<String> configLines(Context c) {
+        File dir = c.getExternalFilesDir(null);
+        if (dir == null) return null;
+        File f = new File(dir, "apps.txt");
+        if (!f.isFile()) return null;
+        List<String> out = new ArrayList<>();
+        try (BufferedReader r = new BufferedReader(new FileReader(f))) {
+            for (String line; (line = r.readLine()) != null; ) {
+                line = line.trim();
+                if (!line.isEmpty() && !line.startsWith("#")) out.add(line);
+            }
+        } catch (IOException e) {
+            return null;
+        }
+        return out.isEmpty() ? null : out;
     }
 
     /** Every launchable TV app except this one, sorted by name. */

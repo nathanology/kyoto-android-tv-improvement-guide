@@ -1,0 +1,15 @@
+# Kyoto Home app list: one row per line, top to bottom, at most 10 fit on screen.
+#   package[,fallback...]|Label
+# The first installed + enabled package on a line wins; lines with none installed are hidden.
+# Find package names with: adb shell pm list packages -3
+# Apply with: bun kyoto home apps launcher/apps.example.txt
+com.netflix.ninja|Netflix
+com.google.android.youtube.tv|YouTube
+com.disney.disneyplus|Disney+
+com.amazon.amazonvideo.livingroom|Prime Video
+com.wbd.stream,com.hbo.hbonow|Max
+com.hulu.livingroomplus|Hulu
+com.apple.atve.androidtv.appletv|Apple TV
+com.peacocktv.peacockandroid|Peacock
+com.tubitv|Tubi
+com.plexapp.android|Plex

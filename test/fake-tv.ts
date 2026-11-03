@@ -79,6 +79,9 @@ export class FakeTv implements AdbLike {
     if (cmd === "getprop ro.build.version.sdk") return `${this.apiLevel}\n`;
     if (cmd === "getprop ro.product.model") return "SmartTV 4K FFM\n";
     if (cmd === "getprop ro.build.version.release") return "10\n";
+    if (cmd === "getprop ro.product.manufacturer" || cmd === "getprop ro.product.brand") return "Hisense\n";
+    if (cmd === "getprop ro.product.device") return "huangshan\n";
+    if (cmd === "pm list packages") return [...this.installed].map((p) => `package:${p}`).join("\n") + "\n";
     if (cmd === "pm list packages -d") return [...this.disabled].map((p) => `package:${p}`).join("\n") + "\n";
     if (cmd === "pm list packages -s") return [...this.installed].map((p) => `package:${p}`).join("\n") + "\n";
     if (cmd === "pm list packages -3") return "";

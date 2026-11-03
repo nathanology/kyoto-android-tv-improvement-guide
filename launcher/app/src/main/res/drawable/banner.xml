@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Launcher banner (320x180): the home screen in miniature. Dark casing, list hairlines, the orange focus dot. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+    <path android:fillColor="#1B1B1A" android:pathData="M0,0h320v180h-320z" />
+    <path android:fillColor="#E9E6DF" android:pathData="M40,52h130v1h-130z" />
+    <path android:fillColor="#3A3936" android:pathData="M40,76h130v1h-130zM40,100h130v1h-130zM40,124h130v1h-130z" />
+    <path android:fillColor="#EB6426" android:pathData="M44,64m-5,0a5,5 0,1 1,10 0a5,5 0,1 1,-10 0" />
+    <path android:fillColor="#3A3936"
+        android:pathData="M240,90m-46,0a46,46 0,1 1,92 0a46,46 0,1 1,-92 0" />
+</vector>

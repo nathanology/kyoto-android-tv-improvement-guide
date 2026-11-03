@@ -6,7 +6,8 @@
     <string name="back">back</string>
     <string name="dark_mode">dark mode</string>
     <string name="light_mode">light mode</string>
-    <!-- Home list, in order: "package[,fallback...]|Label". First installed+enabled package wins; missing apps are skipped. -->
+    <!-- Default home list, in order: "package[,fallback...]|Label". First installed+enabled package wins; missing apps are
+         skipped. Override without rebuilding: `kyoto home apps <file>` (same format, one per line). -->
     <string-array name="home_apps">
         <item>com.netflix.ninja|Netflix</item>
         <item>com.google.android.youtube.tv|YouTube</item>

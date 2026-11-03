@@ -107,6 +107,13 @@ export class Adb implements AdbLike {
     throw new BootTimeout(`TV didn't finish booting within ${timeoutMs / 1000}s.`, "Run `kyoto doctor` once it's back.");
   }
 
+  /** Copy a local file onto the TV. */
+  async push(local: string, remote: string): Promise<void> {
+    const r = await this.run(["-s", this.serial, "push", local, remote]);
+    const err = classify(`push ${remote}`, r);
+    if (err) throw err;
+  }
+
   /** `adb connect` to the pinned serial. Returns true when the device answers. */
   async connect(): Promise<boolean> {
     const r = await this.run(["connect", this.serial]);

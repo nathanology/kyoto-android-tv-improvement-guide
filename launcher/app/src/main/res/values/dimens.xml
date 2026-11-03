@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The TV is 1920x1080 at density 320, so 1dp = 2px. Values are the 1920x1080 design measurements / 2. -->
+<!-- Android TV UIs are 960x540dp (1920x1080 at xhdpi, or 1280x720 at tvdpi). Values are the 1920x1080 design measurements / 2. -->
 <resources>
     <dimen name="margin_x">80dp</dimen>
     <dimen name="margin_y">60dp</dimen>

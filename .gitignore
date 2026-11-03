@@ -1,5 +1,6 @@
 node_modules/
 .context/
+.DS_Store
 
 # Android build output
 launcher/.gradle/
@@ -7,12 +8,7 @@ launcher/build/
 launcher/app/build/
 launcher/local.properties
 
-# Device state. Snapshots and raw dumps contain device identifiers (android_id, serial,
-# MAC addresses) and stay on the machine that manages the TV. Only measurement summaries
-# and the picture-settings record are tracked.
-state/device.json
-state/snapshots/
-state/changes.log
-state/crashes.jsonl
-state/measurements/*/*
-!state/measurements/*/summary.json
+# Everything kyoto writes about your TV: the pinned serial, snapshots (they contain android_id,
+# serial and MAC addresses), the change log, crash log and measurements. It stays on your machine.
+# Share measurements by copying the JSON into docs/case-study/<profile>/ after reading it.
+state/

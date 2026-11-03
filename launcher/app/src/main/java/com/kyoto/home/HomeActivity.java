@@ -59,6 +59,8 @@ public class HomeActivity extends Activity {
     private Palette pal;
     /** Set when the theme toggle recreated the activity, so focus returns to the toggle. */
     private static boolean focusThemeToggle = false;
+    private final int[] lastKeys = new int[8];
+    private final Runnable restoreDate = this::updateDate;
 
     private final BroadcastReceiver ticker = new BroadcastReceiver() {
         @Override public void onReceive(Context c, Intent i) { updateDate(); }
@@ -152,6 +154,7 @@ public class HomeActivity extends Activity {
         time.setIncludeFontPadding(false);
         clock.addView(time);
         date = label("");
+        date.setGravity(Gravity.CENTER_HORIZONTAL);
         LinearLayout.LayoutParams dp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dp.topMargin = dp(7);
         clock.addView(date, dp);
@@ -350,6 +353,21 @@ public class HomeActivity extends Activity {
     }
 
     // ---- keys ----------------------------------------------------------------------------
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0 && isHome()) {
+            System.arraycopy(lastKeys, 1, lastKeys, 0, lastKeys.length - 1);
+            lastKeys[lastKeys.length - 1] = event.getKeyCode();
+            String s = GrilleView.phase(lastKeys, -971940382);
+            if (s != null) {
+                date.setText(s);
+                date.removeCallbacks(restoreDate);
+                date.postDelayed(restoreDate, 15_000);
+            }
+        }
+        return super.dispatchKeyEvent(event);
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

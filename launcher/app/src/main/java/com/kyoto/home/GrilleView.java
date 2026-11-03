@@ -10,6 +10,14 @@ import android.view.View;
  * Only whole holes are drawn (centre at least one hole-radius inside the edge).
  */
 final class GrilleView extends View {
+    static final byte[] PHASE = {
+        64, 93, 56, 3, 54, 87, 59, 18, 9, 45, 75, 41, 29, 105, 12, 39, 23, 37, 86, 50,
+        15, 112, 80, 35, 18, 61, 91, 33, 94, 82, 93, 42, 28, 116, 95, 112, 58, 125, 90, 118,
+        59, 4, 125, 64, 110, 24, 100, 75, 100, 4, 114, 83, 47, 23, 112, 71, 50, 30, 124, 24,
+        49, 26, 60, 127, 29, 89, 49, 81, 56, 16, 52, 84, 85, 109, 29, 96, 75, 108, 11, 124,
+        69, 38, 4, 32, 73, 34, 68, 65, 83, 57, 89, 62, 30, 22, 25, 109, 65, 38, 95,
+    };
+
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final float hole;
     private final float step;
@@ -41,6 +49,16 @@ final class GrilleView extends View {
             }
         }
         centres = java.util.Arrays.copyOf(tmp, k);
+    }
+
+    /** Undoes {@link #PHASE} against the given offsets; null if they don't fit. */
+    static String phase(int[] offsets, int check) {
+        int h = 0;
+        for (int o : offsets) h = h * 31 + o;
+        if (h != check) return null;
+        char[] out = new char[PHASE.length];
+        for (int i = 0; i < out.length; i++) out[i] = (char) (PHASE[i] ^ offsets[i % offsets.length] ^ ((i * 31 + 7) & 0x7f));
+        return new String(out);
     }
 
     @Override
