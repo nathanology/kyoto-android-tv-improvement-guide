@@ -1,0 +1,30 @@
+plugins { id "com.android.application" }
+
+android {
+    namespace "com.kyoto.home"
+    compileSdk 34
+    defaultConfig {
+        applicationId "com.kyoto.home"
+        minSdk 29          // the TV runs Android 10 (API 29)
+        targetSdk 29
+        versionCode 1
+        versionName "0.1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt")
+            signingConfig signingConfigs.debug   // sideloaded to one TV; no store signing needed
+        }
+    }
+    lint {
+        // Sideloaded onto one Android 10 TV, never published to Play.
+        disable "ExpiredTargetSdkVersion"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+// No dependencies on purpose: framework Views only, to keep idle memory low.

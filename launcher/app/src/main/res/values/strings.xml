@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">kyoto</string>
+    <string name="all_apps">all apps</string>
+    <string name="settings">settings</string>
+    <string name="back">back</string>
+    <string name="dark_mode">dark mode</string>
+    <string name="light_mode">light mode</string>
+    <!-- Home list, in order: "package[,fallback...]|Label". First installed+enabled package wins; missing apps are skipped. -->
+    <string-array name="home_apps">
+        <item>com.netflix.ninja|Netflix</item>
+        <item>com.google.android.youtube.tv|YouTube</item>
+        <item>com.hulu.livingroomplus|Hulu</item>
+        <item>com.disney.disneyplus|Disney+</item>
+        <item>com.wbd.stream,com.hbo.hbonow|Max</item>
+        <item>com.amazon.amazonvideo.livingroom|Prime Video</item>
+        <item>com.apple.atve.androidtv.appletv|Apple TV</item>
+        <item>com.peacocktv.peacockandroid|Peacock</item>
+        <item>com.tubitv|Tubi</item>
+        <item>com.pbs.video|PBS</item>
+    </string-array>
+</resources>

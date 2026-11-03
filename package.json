@@ -1,0 +1,17 @@
+{
+  "name": "kyoto",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": { "kyoto": "cli/main.ts" },
+  "scripts": {
+    "kyoto": "bun cli/main.ts",
+    "test": "bun test",
+    "test:live": "KYOTO_LIVE=1 bun test test/live --timeout 600000",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.6.0"
+  }
+}

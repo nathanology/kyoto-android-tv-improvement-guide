@@ -1,0 +1,15 @@
+
+Exception occurred while executing:
+java.lang.IllegalArgumentException: Unknown package: com.kyoto.not.installed
+	at com.android.server.pm.PackageManagerService.setEnabledSetting(PackageManagerService.java:21389)
+	at com.android.server.pm.PackageManagerService.setApplicationEnabledSetting(PackageManagerService.java:21333)
+	at com.android.server.pm.PackageManagerShellCommand.runSetEnabledSetting(PackageManagerShellCommand.java:1826)
+	at com.android.server.pm.PackageManagerShellCommand.onCommand(PackageManagerShellCommand.java:214)
+	at android.os.ShellCommand.exec(ShellCommand.java:104)
+	at com.android.server.pm.PackageManagerService.onShellCommand(PackageManagerService.java:21915)
+	at android.os.Binder.shellCommand(Binder.java:881)
+	at android.os.Binder.onTransact(Binder.java:765)
+	at android.content.pm.IPackageManager$Stub.onTransact(IPackageManager.java:4860)
+	at com.android.server.pm.PackageManagerService.onTransact(PackageManagerService.java:4009)
+	at android.os.Binder.execTransactInternal(Binder.java:1021)
+	at android.os.Binder.execTransact(Binder.java:994)

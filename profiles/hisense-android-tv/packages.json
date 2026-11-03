@@ -1,0 +1,816 @@
+{
+  "device": "SmartTV 4K FFM",
+  "packages": [
+    {
+      "pkg": "air.com.vudu.air.DownloaderTablet",
+      "decision": "disable",
+      "system": true,
+      "batch": 2,
+      "reason": "Vudu (unused)"
+    },
+    {
+      "pkg": "android",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "android.auto_generated_rro_product__",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "android.auto_generated_rro_vendor__",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "android.autoinstalls.config.hisense.huangshan",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.amazon.amazonvideo.livingroom",
+      "decision": "keep",
+      "system": true,
+      "reason": "user watches (Prime Video)"
+    },
+    {
+      "pkg": "com.android.backupconfirm",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.bluetooth",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.bluetooth.auto_generated_rro_vendor__",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.bluetoothmidiservice",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.boot.fallbackhome",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.captiveportallogin",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.certinstaller",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.companiondevicemanager",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.cts.ctsshim",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.cts.priv.ctsshim",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.dreams.basic",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.dynsystem",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.externalstorage",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.htmlviewer",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.inputdevices",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.keychain",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.localtransport",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.location.fused",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.modulemetadata",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.networkstack.inprocess",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.networkstack.permissionconfig",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.pacprocessor",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.printspooler",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.providers.calendar",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.providers.contacts",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.providers.contacts.auto_generated_rro_product__",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.providers.downloads",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.providers.media",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.providers.settings",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.providers.settings.auto_generated_rro_product__",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.providers.settings.auto_generated_rro_vendor__",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.providers.tv",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.providers.userdictionary",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.proxyhandler",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.se",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.settings.intelligence",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.sharedstoragebackup",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.shell",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.statementservice",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.systemui",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.tv.settings",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.tv.settings.gms.resoverlay",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.vending",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.vpndialogs",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.android.wallpaperbackup",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.apple.atve.androidtv.appletv",
+      "decision": "keep",
+      "system": false,
+      "reason": "user watches"
+    },
+    {
+      "pkg": "com.aspiro.tidal",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "Tidal (unused)"
+    },
+    {
+      "pkg": "com.bamnetworks.mobile.android.gameday.atbat",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "MLB (unused)"
+    },
+    {
+      "pkg": "com.clearchannel.iheartradio.tv",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "iHeartRadio (unused)"
+    },
+    {
+      "pkg": "com.demo",
+      "decision": "disable",
+      "system": true,
+      "batch": 1,
+      "reason": "Retail demo content"
+    },
+    {
+      "pkg": "com.disney.disneyplus",
+      "decision": "keep",
+      "system": false,
+      "reason": "user watches"
+    },
+    {
+      "pkg": "com.espn.score_center",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "ESPN (unused)"
+    },
+    {
+      "pkg": "com.foxsports.android",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "Fox Sports (unused)"
+    },
+    {
+      "pkg": "com.google.android.apps.mediashell",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.backdrop",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.boot.appsplashscreen",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.ext.services",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.ext.shared",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.feedback",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.gms",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.gsf",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.inputmethod.latin",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.katniss",
+      "decision": "keep",
+      "system": true,
+      "reason": "user uses voice search"
+    },
+    {
+      "pkg": "com.google.android.marvin.talkback",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.onetimeinitializer",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.packageinstaller",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.partnersetup",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.permissioncontroller",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.play.games",
+      "decision": "disable",
+      "system": true,
+      "batch": 1,
+      "reason": "Play Games (unused)"
+    },
+    {
+      "pkg": "com.google.android.sss.authbridge",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.syncadapters.calendar",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.tts",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.tungsten.setupwraith",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.tv.assistant",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.tv.bugreportsender",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.tv.frameworkpackagestubs",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.tv.remote.service",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.tvlauncher",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.tvrecommendations",
+      "decision": "disable",
+      "system": true,
+      "batch": 1,
+      "reason": "Home-screen recommendation rows (user wants off); ~22 MB"
+    },
+    {
+      "pkg": "com.google.android.videos",
+      "decision": "disable",
+      "system": true,
+      "batch": 1,
+      "reason": "Google Play Movies, discontinued; LMK churn"
+    },
+    {
+      "pkg": "com.google.android.webview",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.google.android.youtube.tv",
+      "decision": "keep",
+      "system": true,
+      "reason": "user watches"
+    },
+    {
+      "pkg": "com.google.android.youtube.tvmusic",
+      "decision": "disable",
+      "system": true,
+      "batch": 2,
+      "reason": "YouTube Music (unused)"
+    },
+    {
+      "pkg": "com.google.android.youtube.tvunplugged",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "YouTube TV live-TV subscription app (not regular YouTube; unused)"
+    },
+    {
+      "pkg": "com.hbo.hbonow",
+      "decision": "keep",
+      "system": false,
+      "reason": "user watches (HBO Max)"
+    },
+    {
+      "pkg": "com.hisense.alexa",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.audio_update_service",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.evservice",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.favkey",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.fte",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.hibrowser",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.hotelmode",
+      "decision": "disable",
+      "system": true,
+      "batch": 1,
+      "reason": "Hotel/hospitality mode"
+    },
+    {
+      "pkg": "com.hisense.kpad",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.mixbar",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.remoteupgrade",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.service.message",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.storemode",
+      "decision": "disable",
+      "system": true,
+      "batch": 1,
+      "reason": "Retail store demo mode"
+    },
+    {
+      "pkg": "com.hisense.tv.b2b",
+      "decision": "disable",
+      "system": true,
+      "batch": 1,
+      "reason": "Business/commercial display mode"
+    },
+    {
+      "pkg": "com.hisense.tv.customerlauncher",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.tv.dlna",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.tv.hisremotenow",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.tv.hisremotenowserver",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.tv.hitvinput",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.tv.ota",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.tv.protector",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.tv.rcs",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.tv.smartsense",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.tv.smartservice",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.tv.videocolor",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hisense.uifac",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.hulu.livingroomplus",
+      "decision": "keep",
+      "system": false,
+      "reason": "user watches"
+    },
+    {
+      "pkg": "com.jamdeo.tv.mediacenter",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.mediatek.AIPQDisplay",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.mediatek.androidbox",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.mediatek.autopair",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.mediatek.network",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.mediatek.partner.netflix",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.mediatek.tunerservice",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.mediatek.tv.agent",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.mediatek.wwtv.tvcenter",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.ncaa.mmlive.app",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "NCAA March Madness (unused)"
+    },
+    {
+      "pkg": "com.netflix.ninja",
+      "decision": "keep",
+      "system": true,
+      "reason": "user watches"
+    },
+    {
+      "pkg": "com.pandora.android.atv",
+      "decision": "disable",
+      "system": true,
+      "batch": 2,
+      "reason": "Pandora (unused)"
+    },
+    {
+      "pkg": "com.pbs.video",
+      "decision": "keep",
+      "system": false,
+      "reason": "user watches"
+    },
+    {
+      "pkg": "com.peacocktv.peacockandroid",
+      "decision": "keep",
+      "system": false,
+      "reason": "user watches"
+    },
+    {
+      "pkg": "com.roku.web.trc",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "The Roku Channel (unused)"
+    },
+    {
+      "pkg": "com.sling",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "Sling (unused)"
+    },
+    {
+      "pkg": "com.spotify.tv.android",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "Spotify (unused)"
+    },
+    {
+      "pkg": "com.ted.android.tv",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "TED (unused)"
+    },
+    {
+      "pkg": "com.tubitv",
+      "decision": "keep",
+      "system": false,
+      "reason": "user watches"
+    },
+    {
+      "pkg": "com.vidaa.persistent.service",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.vmn.android.comedycentral",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "Comedy Central (unused)"
+    },
+    {
+      "pkg": "com.vt.eula",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.vt.tv.aiot",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.vt.tv.aipq",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.vt.tv.smartsense.ui",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.vt.tv.usbota",
+      "decision": "keep",
+      "system": true
+    },
+    {
+      "pkg": "com.wbd.stream",
+      "decision": "keep",
+      "system": false,
+      "reason": "user watches (Max)"
+    },
+    {
+      "pkg": "com.xumo.xumo.tv",
+      "decision": "disable",
+      "system": false,
+      "batch": 1,
+      "reason": "Xumo Play (unused); killed by LMK repeatedly in as-is logs"
+    },
+    {
+      "pkg": "net.vidaatv.android.tv",
+      "decision": "disable",
+      "system": true,
+      "batch": 1,
+      "reason": "VIDAA Channels companion (unused)"
+    },
+    {
+      "pkg": "net.vidaatv.hisense.android.tv",
+      "decision": "disable",
+      "system": true,
+      "batch": 1,
+      "reason": "VIDAA Channels (unused); ~88 MB in background"
+    },
+    {
+      "pkg": "tv.pluto.android",
+      "decision": "disable",
+      "system": false,
+      "reason": "Watched rarely. Background restriction (tune) didn't stop it: the TV input framework restarts its live-TV service at boot (~91 MB measured 2026-11-01). Re-enable with `kyoto rollback --batch 3 --apply` or `pm enable tv.pluto.android`.",
+      "batch": 3
+    },
+    {
+      "pkg": "tv.twitch.android.app",
+      "decision": "disable",
+      "system": false,
+      "batch": 2,
+      "reason": "Twitch (unused); ~23 MB in background"
+    }
+  ]
+}

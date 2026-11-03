@@ -1,0 +1,18 @@
+node_modules/
+.context/
+
+# Android build output
+launcher/.gradle/
+launcher/build/
+launcher/app/build/
+launcher/local.properties
+
+# Device state. Snapshots and raw dumps contain device identifiers (android_id, serial,
+# MAC addresses) and stay on the machine that manages the TV. Only measurement summaries
+# and the picture-settings record are tracked.
+state/device.json
+state/snapshots/
+state/changes.log
+state/crashes.jsonl
+state/measurements/*/*
+!state/measurements/*/summary.json
