@@ -7,6 +7,7 @@
 
 import type { AdbLike } from "./adb";
 import { CommandFailed } from "./adb";
+import { safeKey, safePkg } from "./guard";
 
 export const NAMESPACES = ["global", "secure", "system"] as const;
 export type Namespace = (typeof NAMESPACES)[number];
@@ -84,7 +85,7 @@ export async function takeSnapshot(adb: AdbLike, label: string, appPkgs: string[
   const apps: Record<string, AppState> = {};
   for (const pkg of appPkgs) {
     apps[pkg] = {
-      runInBackground: parseAppop(await adb.shell(`cmd appops get ${pkg} RUN_IN_BACKGROUND`)),
+      runInBackground: parseAppop(await adb.shell(`cmd appops get ${safePkg(pkg)} RUN_IN_BACKGROUND`)),
       bucket: parseBucket(await adb.shell(`am get-standby-bucket ${pkg}`)),
     };
   }
@@ -126,13 +127,13 @@ export function diffSnapshots(target: Snapshot, live: Snapshot, scope: Scope): C
 export function changeToCommand(c: Change): string {
   switch (c.kind) {
     case "pkg":
-      return c.to === "enabled" ? `pm enable ${c.pkg}` : `pm disable-user --user 0 ${c.pkg}`;
+      return c.to === "enabled" ? `pm enable ${safePkg(c.pkg)}` : `pm disable-user --user 0 ${safePkg(c.pkg)}`;
     case "setting":
-      return c.to === null ? `settings delete ${c.ns} ${c.key}` : `settings put ${c.ns} ${c.key} ${shellQuote(c.to)}`;
+      return c.to === null ? `settings delete ${c.ns} ${safeKey(c.key)}` : `settings put ${c.ns} ${safeKey(c.key)} ${shellQuote(c.to)}`;
     case "appop":
-      return `cmd appops set ${c.pkg} RUN_IN_BACKGROUND ${c.to}`;
+      return `cmd appops set ${safePkg(c.pkg)} RUN_IN_BACKGROUND ${safeKey(c.to)}`;
     case "bucket":
-      return `am set-standby-bucket ${c.pkg} ${c.to}`;
+      return `am set-standby-bucket ${safePkg(c.pkg)} ${safeKey(c.to)}`;
   }
 }
 

@@ -7,7 +7,7 @@
 //   catalog/packages.json          shared knowledge: what a package is and how risky disabling it is
 
 import type { AdbLike } from "./adb";
-import { checkPackage } from "./guard";
+import { checkPackage, isPackageName, isSettingKey } from "./guard";
 import { NAMESPACES, type Namespace, parsePackageList } from "./snapshot";
 
 /** Apps launched after every batch to prove the TV still works. Missing ones are skipped. */
@@ -76,6 +76,7 @@ export function validatePackages(data: unknown, home: string | null = null): { p
   for (const [i, e] of p.packages.entries()) {
     const at = e?.pkg ? e.pkg : `entry #${i}`;
     if (!e || typeof e.pkg !== "string" || !e.pkg) errors.push(`${at}: missing pkg`);
+    else if (!isPackageName(e.pkg)) errors.push(`${JSON.stringify(e.pkg)}: not a valid package name`);
     else if (seen.has(e.pkg)) errors.push(`${at}: listed twice`);
     else seen.add(e.pkg);
     if (e?.decision !== "keep" && e?.decision !== "disable") errors.push(`${at}: decision must be "keep" or "disable"`);
@@ -96,8 +97,9 @@ export function validateTune(data: unknown): TuneProfile {
   for (const s of t.settings) {
     if (!NAMESPACES.includes(s.ns)) errors.push(`${s.key ?? "?"}: ns must be global|secure|system`);
     if (!s.key || typeof s.value !== "string") errors.push(`${s.key ?? "?"}: needs key and string value`);
+    else if (!isSettingKey(s.key)) errors.push(`${JSON.stringify(s.key)}: not a valid setting key`);
   }
-  for (const r of t.restrictBackground) if (!r.pkg) errors.push("restrictBackground entry missing pkg");
+  for (const r of t.restrictBackground) if (!isPackageName(r.pkg)) errors.push(`restrictBackground: ${JSON.stringify(r.pkg)} is not a valid package name`);
   if (errors.length) throw new ProfileError("tune.json has problems:\n  " + errors.join("\n  "));
   return t;
 }
@@ -146,7 +148,7 @@ export function validateProfileMeta(data: unknown, dirName: string): DeviceProfi
   if (p.name !== dirName) errors.push(`name must equal the folder name "${dirName}"`);
   for (const k of Object.keys(p.match ?? {})) if (!PROP_KEYS.includes(k as PropKey)) errors.push(`match.${k}: use one of ${PROP_KEYS.join(", ")}`);
   for (const k of ["checkApps", "measureApps"] as const) {
-    if (p[k] !== undefined && (!Array.isArray(p[k]) || p[k]!.some((x) => typeof x !== "string"))) errors.push(`${k} must be a list of package names`);
+    if (p[k] !== undefined && (!Array.isArray(p[k]) || !p[k]!.every(isPackageName))) errors.push(`${k} must be a list of package names`);
   }
   if (errors.length) throw new ProfileError(`profiles/${dirName}/profile.json has problems:\n  ` + errors.join("\n  "));
   return p;
@@ -174,7 +176,7 @@ export function validateCatalog(data: unknown): CatalogEntry[] {
   const errors: string[] = [];
   const seen = new Set<string>();
   for (const e of data as CatalogEntry[]) {
-    if (!e?.pkg || seen.has(e.pkg)) errors.push(`${e?.pkg ?? "?"}: missing or listed twice`);
+    if (!isPackageName(e?.pkg) || seen.has(e.pkg)) errors.push(`${JSON.stringify(e?.pkg)}: invalid, missing or listed twice`);
     seen.add(e?.pkg);
     if (!RISKS.includes(e?.risk)) errors.push(`${e?.pkg}: risk must be ${RISKS.join("|")}`);
     if (!e?.label || !e?.note) errors.push(`${e?.pkg}: needs label and note`);

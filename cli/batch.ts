@@ -24,7 +24,7 @@
 
 import type { AdbLike } from "./adb";
 import { sleep as realSleep } from "./adb";
-import { assertAllowed, resolveHome } from "./guard";
+import { assertAllowed, resolveHome, safeComponent, safeKey, safePkg } from "./guard";
 import { launchActivity, parseTotalTime } from "./measure";
 import { parseDropbox } from "./crashes";
 import {
@@ -121,11 +121,11 @@ export function mergeScopes(scopes: Scope[]): Scope {
 export function actionCommands(a: Action, apiLevel: number): string[] {
   switch (a.kind) {
     case "disable":
-      return [`pm disable-user --user 0 ${a.pkg}`];
+      return [`pm disable-user --user 0 ${safePkg(a.pkg)}`];
     case "setting":
-      return [`settings put ${a.ns} ${a.key} ${shellQuote(a.value)}`];
+      return [`settings put ${a.ns} ${safeKey(a.key)} ${shellQuote(a.value)}`];
     case "restrict-bg":
-      return [`cmd appops set ${a.pkg} RUN_IN_BACKGROUND ignore`, ...(apiLevel >= 30 ? [`am set-standby-bucket ${a.pkg} restricted`] : [])];
+      return [`cmd appops set ${safePkg(a.pkg)} RUN_IN_BACKGROUND ignore`, ...(apiLevel >= 30 ? [`am set-standby-bucket ${a.pkg} restricted`] : [])];
   }
 }
 
@@ -213,8 +213,8 @@ export async function runChecks(adb: AdbLike, apps: string[], sleep: (ms: number
       res.skipped.push(pkg);
       continue;
     }
-    await adb.shell(`am force-stop ${pkg}`);
-    const t = parseTotalTime(await adb.shell(`am start -W -n ${act}`));
+    await adb.shell(`am force-stop ${safePkg(pkg)}`);
+    const t = parseTotalTime(await adb.shell(`am start -W -n ${safeComponent(act)}`));
     await sleep(5_000);
     const resumed = await adb.shell("dumpsys activity activities | grep -E \"ResumedActivity\" || true");
     if (t === null) res.failures.push(`${pkg} didn't start`);

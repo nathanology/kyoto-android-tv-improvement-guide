@@ -40,9 +40,10 @@ bun run typecheck
 ```
 
 - Every TV interaction goes through `AdbLike` (`cli/adb.ts`); tests use `FakeTv` (`test/fake-tv.ts`), which replays real output from `test/fixtures/`. If you add a shell command, teach FakeTv to answer it.
+- Strings from profiles, the catalog and snapshots end up in `adb shell` command lines. They are validated as plain package names / setting keys when loaded and again right before use (`safePkg`, `safeKey`, `safeComponent` in `cli/guard.ts`). Keep both layers for any new command.
 - Every change to the TV goes through `runBatch` (`cli/batch.ts`). Don't add mutation paths around it, and don't weaken `cli/guard.ts` without an issue explaining why.
 - Live tests (`KYOTO_LIVE=1 bun test test/live --timeout 600000`) run against a real TV with a harmless canary package and leave it as they found it.
-- If you capture new fixtures with `kyoto capture-fixtures`, zero out serials, android_id and MAC addresses before committing (see the existing fixtures).
+- `kyoto capture-fixtures` replaces identifiers (serials, MACs, android_id, Netflix ESN, device names, registration QR codes, …) with `REDACTED` via `cli/redact.ts`, and a test fails if a committed fixture still contains one. Read `git diff test/fixtures/` anyway: if you spot an identifier it missed, add its key to `cli/redact.ts`.
 - Kyoto Home has no dependencies on purpose (framework Views only) to keep its memory low. Please keep it that way.
 
 ## Open tasks

@@ -81,10 +81,37 @@ export function checkPackage(pkg: string, opts: GuardOptions = {}): Verdict {
   return { ok: true };
 }
 
+// Profiles and the catalog are community-contributed, and their strings end up in `adb shell` command
+// lines on the TV. Only plain identifiers may get there, so a malicious entry like "a.b; reboot" can't.
+const PACKAGE_NAME = /^[a-zA-Z][\w]*(\.[\w]+)*$/; // "android" itself has no dot
+const SETTING_KEY = /^[\w.\-]+$/;
+const COMPONENT = /^[a-zA-Z][\w]*(\.[\w]+)+\/[\w.$]+$/;
+
+export const isPackageName = (s: unknown): s is string => typeof s === "string" && PACKAGE_NAME.test(s);
+export const isSettingKey = (s: unknown): s is string => typeof s === "string" && SETTING_KEY.test(s);
+export const isComponent = (s: unknown): s is string => typeof s === "string" && COMPONENT.test(s);
+
+export class UnsafeArgument extends Error {}
+
+/** Last line of defence before a value is interpolated into a shell command. */
+export function safePkg(s: string): string {
+  if (!isPackageName(s)) throw new UnsafeArgument(`Refusing to use "${s}" in a TV command: not a package name.`);
+  return s;
+}
+export function safeKey(s: string): string {
+  if (!isSettingKey(s)) throw new UnsafeArgument(`Refusing to use "${s}" in a TV command: not a setting key.`);
+  return s;
+}
+export function safeComponent(s: string): string {
+  if (!isComponent(s)) throw new UnsafeArgument(`Refusing to use "${s}" in a TV command: not an activity name.`);
+  return s;
+}
+
 /** --allow takes exact package names only; patterns would defeat the point. */
 export function validateAllow(values: string[]): string[] {
   for (const v of values) {
-    if (!/^[a-zA-Z][\w]*(\.[\w]+)+$/.test(v)) {
+    // Stricter than isPackageName: a bare word like "katniss" is a fragment, not an exact package.
+    if (!isPackageName(v) || !v.includes(".")) {
       throw new Error(`--allow needs an exact package name, got "${v}" (no wildcards)`);
     }
   }

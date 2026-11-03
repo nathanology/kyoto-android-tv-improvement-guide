@@ -14,6 +14,7 @@
 
 import type { AdbLike } from "./adb";
 import { sleep as realSleep } from "./adb";
+import { safeComponent, safePkg } from "./guard";
 
 export const PROTOCOL = 2;
 export type Variant = "as-is" | "fresh" | "quick";
@@ -88,10 +89,10 @@ export function countLmkKills(logcat: string): number {
 
 export async function launchActivity(adb: AdbLike, pkg: string): Promise<string | null> {
   const out = await adb.shell(
-    `cmd package resolve-activity --brief -c android.intent.category.LEANBACK_LAUNCHER -a android.intent.action.MAIN ${pkg}`,
+    `cmd package resolve-activity --brief -c android.intent.category.LEANBACK_LAUNCHER -a android.intent.action.MAIN ${safePkg(pkg)}`,
   );
   const last = out.trim().split("\n").pop()?.trim() ?? "";
-  return last.includes("/") ? last : null;
+  return last.includes("/") ? safeComponent(last) : null;
 }
 
 export interface MeasureOptions {

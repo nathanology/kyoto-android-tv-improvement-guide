@@ -9,8 +9,9 @@ import { fileURLToPath } from "node:url";
 import { Adb, AdbError, BootTimeout } from "./adb";
 import { type Action, type LogEntry, type Prompt, batchStates, mergeScopes, readLog, rollback, rollbackTarget, runBatch } from "./batch";
 import { pollCrashes, readLog as readCrashLog, summarize } from "./crashes";
-import { GuardError, resolveHome, validateAllow } from "./guard";
+import { GuardError, UnsafeArgument, resolveHome, safeComponent, validateAllow } from "./guard";
 import { APPS_DIR, KYOTO_HOME, parseAppsList } from "./launcher";
+import { redact } from "./redact";
 import { CompareError, DEFAULT_APPS, type Measurement, compare, measureRepeated } from "./measure";
 import {
   type CatalogEntry,
@@ -429,7 +430,7 @@ async function cmdCaptureFixtures() {
   const { adb } = await adbFor();
   const dir = `${ROOT}test/fixtures`;
   for (const [name, cmd] of Object.entries(FIXTURES)) {
-    await Bun.write(`${dir}/${name}.txt`, await adb.shell(cmd));
+    await Bun.write(`${dir}/${name}.txt`, redact(await adb.shell(cmd)));
   }
   // Failure strings, captured raw (harmless: the packages don't exist).
   for (const [name, args] of Object.entries({
@@ -446,7 +447,8 @@ async function cmdCaptureFixtures() {
   const lmk = await adb.shell("logcat -d -b main,system | grep lowmemorykiller | tail -20; true");
   await Bun.write(`${dir}/logcat_lmk.txt`, lmk);
   log(`✓ Captured ${Object.keys(FIXTURES).length + 4} fixtures into test/fixtures/`);
-  log("⚠ Before committing, zero out serials, MAC addresses and android_id (see CONTRIBUTING.md).");
+  log("Identifiers (serials, MACs, android_id, device names, …) were replaced with REDACTED.");
+  log("⚠ Still read the diff before committing: `git diff test/fixtures/`.");
 }
 
 async function cmdMeasure(flags: Record<string, string | boolean>) {
@@ -559,7 +561,7 @@ async function cmdHome(sub: string | undefined, component: string | undefined, f
   if (current === pkg) return log(`${pkg} is already HOME.`);
 
   // 1. The new launcher must actually open before we take HOME away from the current one.
-  const start = await adb.shell(`am start -W -n ${component}`);
+  const start = await adb.shell(`am start -W -n ${safeComponent(component)}`);
   if (!/Status:\s*ok/.test(start)) throw new Error(`${component} didn't open; not changing HOME.\n${start.trim()}`);
   log(`✓ ${component} opens`);
   if (apply) {
@@ -728,7 +730,7 @@ if (import.meta.main) {
     if (e instanceof GuardError) { console.error(e.message); process.exit(2); }
     if (e instanceof NeedsHuman) { console.error(`✋ ${e.message}`); process.exit(3); }
     if (e instanceof AdbError) { console.error(`✗ ${e.message}${e.hint ? `\n  ${e.hint}` : ""}`); process.exit(1); }
-    if (e instanceof ProfileError || e instanceof SnapshotCorrupt || e instanceof CompareError) { console.error(`✗ ${e.message}`); process.exit(1); }
+    if (e instanceof ProfileError || e instanceof SnapshotCorrupt || e instanceof CompareError || e instanceof UnsafeArgument) { console.error(`✗ ${e.message}`); process.exit(1); }
     console.error(e);
     process.exit(1);
   });

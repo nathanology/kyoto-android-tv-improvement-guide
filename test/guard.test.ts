@@ -78,3 +78,21 @@ test("assertAllowed lists every refusal", () => {
     expect((e as GuardError).refusals.map((r) => r.pkg)).toEqual(["com.android.shell", "com.android.vending"]);
   }
 });
+
+describe("shell-safe identifiers", () => {
+  test("profile strings that would inject shell commands are rejected at load and at use", async () => {
+    const { validatePackages, validateTune, validateProfileMeta, validateCatalog } = await import("../cli/profile");
+    const { actionCommands } = await import("../cli/batch");
+    const { changeToCommand } = await import("../cli/snapshot");
+    const { safePkg } = await import("../cli/guard");
+    const evil = "com.evil.app;reboot";
+    expect(() => validatePackages({ packages: [{ pkg: evil, decision: "disable", batch: 1 }] })).toThrow(/not a valid package name/);
+    expect(() => validateTune({ settings: [{ ns: "global", key: "a$(reboot)", value: "1" }], restrictBackground: [] })).toThrow(/setting key/);
+    expect(() => validateTune({ settings: [], restrictBackground: [{ pkg: "x y" }] })).toThrow(/package name/);
+    expect(() => validateProfileMeta({ name: "p", checkApps: ["a.b`id`"] }, "p")).toThrow(/checkApps/);
+    expect(() => validateCatalog([{ pkg: "a.b|sh", label: "x", risk: "safe", note: "x" }])).toThrow(/invalid/);
+    expect(() => actionCommands({ kind: "disable", pkg: evil }, 29)).toThrow(/Refusing/);
+    expect(() => changeToCommand({ kind: "setting", ns: "global", key: "k;reboot", to: "1" })).toThrow(/Refusing/);
+    expect(safePkg("android")).toBe("android");
+  });
+});
